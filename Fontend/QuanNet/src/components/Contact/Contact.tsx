@@ -8,6 +8,8 @@ interface Message {
 }
 
 export default function Contact() {
+  
+
   const [messages, setMessages] = useState<Message[]>([
     {
       sender: "Nhân viên",
