@@ -1,0 +1,37 @@
+{
+  "1xx_Informational": {
+    "100": "Continue - Server đã nhận phần đầu của request, client có thể tiếp tục gửi.",
+    "101": "Switching Protocols - Server đồng ý chuyển giao thức (ví dụ: HTTP -> WebSocket)."
+  },
+
+  "2xx_Success": {
+    "200": "OK - Yêu cầu được xử lý thành công.",
+    "201": "Created - Tài nguyên mới đã được tạo thành công (thường dùng với POST).",
+    "202": "Accepted - Yêu cầu được chấp nhận nhưng đang xử lý bất đồng bộ.",
+    "204": "No Content - Xử lý thành công nhưng không trả dữ liệu."
+  },
+
+  "3xx_Redirection": {
+    "301": "Moved Permanently - Tài nguyên đã chuyển hẳn sang URL khác.",
+    "302": "Found - Chuyển hướng tạm thời đến URL khác.",
+    "304": "Not Modified - Dữ liệu chưa thay đổi, có thể dùng lại cache."
+  },
+
+  "4xx_Client_Error": {
+    "400": "Bad Request - Request sai cú pháp hoặc dữ liệu không hợp lệ.",
+    "401": "Unauthorized - Thiếu hoặc sai token đăng nhập.",
+    "403": "Forbidden - Có token nhưng không đủ quyền truy cập.",
+    "404": "Not Found - Không tìm thấy tài nguyên yêu cầu.",
+    "405": "Method Not Allowed - Phương thức HTTP không được hỗ trợ.",
+    "409": "Conflict - Xung đột dữ liệu (ví dụ: trùng khóa chính).",
+    "422": "Unprocessable Entity - Dữ liệu hợp lệ cú pháp nhưng sai logic."
+  },
+
+  "5xx_Server_Error": {
+    "500": "Internal Server Error - Lỗi không xác định ở phía server.",
+    "501": "Not Implemented - Chức năng chưa được hỗ trợ.",
+    "502": "Bad Gateway - Server trung gian nhận lỗi từ backend.",
+    "503": "Service Unavailable - Server quá tải hoặc đang bảo trì.",
+    "504": "Gateway Timeout - Hết thời gian chờ phản hồi từ backend."
+  }
+}
