@@ -6,7 +6,6 @@ import "nprogress/nprogress.css";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
-
 interface LoginResponse {
   token: string;
   user?: {
@@ -22,7 +21,6 @@ export default function Login() {
   const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
 
-  
   const handleSubmit: React.FormEventHandler<HTMLFormElement> = async (e) => {
     e.preventDefault();
     setLoading(true);
@@ -35,7 +33,7 @@ export default function Login() {
       );
 
       toast.success(res.data.message || "Đăng nhập thành công!");
-      console.log("Token:", res.data.token);
+      // console.log("Token:", res.data.token);
       localStorage.setItem("token", res.data.token);
 
       setTimeout(() => {
@@ -43,11 +41,13 @@ export default function Login() {
       }, 1200);
     } catch (err) {
       const error = err as AxiosError<{ message?: string }>;
-      toast.error(error.response?.data?.message || "Sai tài khoản hoặc mật khẩu!");
+      toast.error(
+        error.response?.data?.message || "Sai tài khoản hoặc mật khẩu!"
+      );
     } finally {
       setLoading(false);
       NProgress.done();
-       // Kết thúc progress bar
+      // Kết thúc progress bar
     }
   };
 
@@ -130,10 +130,7 @@ export default function Login() {
 
             <p className="text-[14px] mt-1">
               Chưa có tài khoản sao, phải{" "}
-              <a
-                className="text-[#06BF00] cursor-pointer"
-                onClick={handleBack}
-              >
+              <a className="text-[#06BF00] cursor-pointer" onClick={handleBack}>
                 Đăng kí
               </a>{" "}
               ngay

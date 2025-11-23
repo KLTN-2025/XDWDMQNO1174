@@ -65,4 +65,37 @@ export const UserModel = {
       throw error;
     }
   },
+  //Đổi quyền User thành Employess
+  async changeRole(currentUserId, targetUserId, newRole) {
+    try {
+      // 1️⃣ Kiểm tra người thực hiện
+      const currentUser = await User.findByPk(currentUserId);
+      if (!currentUser || currentUser.Role !== "Admin") {
+        throw new Error("Bạn không có quyền thực hiện hành động này");
+      }
+
+      // 2️⃣ Kiểm tra vai trò hợp lệ
+      const validRoles = ["Admin", "Employee", "User"];
+      if (!validRoles.includes(newRole)) {
+        throw new Error("Vai trò không hợp lệ");
+      }
+
+      // 3️⃣ Tìm người bị đổi quyền
+      const targetUser = await User.findByPk(targetUserId);
+      if (!targetUser) {
+        throw new Error("Không tìm thấy người dùng cần đổi quyền");
+      }
+
+      // ✅ 4️⃣ Cập nhật role (cho phép đổi cả Admin)
+      await targetUser.update({ Role: newRole });
+
+      // console.log(
+      //   `✅ ${currentUser.Email} đã đổi quyền của ${targetUser.Email} thành ${newRole}`
+      // );
+      return targetUser;
+    } catch (error) {
+      console.error("❌ Lỗi khi cập nhật quyền:", error);
+      throw error;
+    }
+  },
 };

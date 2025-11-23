@@ -1,16 +1,18 @@
 import express from "express";
 import dotenv from "dotenv";
 import db from "../models/index";
-import router from "./routers/authRouter";
-import userRouter from "./routers/userRouter";
 import routerMiddlewares from "./middlewares/routerMidlleware";
 import cors from "cors";
+//Import cho socket
+import http from "http";
+import { Server } from "socket.io";
+import initChatSocket from "./sockets/chatSocket";
 dotenv.config();
 
 const app = express();
 const port = process.env.PORT || 8080;
 
-// 🟢 Thiết lập Cors
+// 🟢 Thiết lập Cors cho API vào
 app.use(
   cors({
     origin: process.env.CLIENT_URL_Test || "http://localhost:5173",
@@ -20,22 +22,26 @@ app.use(
 
 // 🟢 Middleware để parse JSON
 app.use(express.json());
-
-// //Gắn router vào ứng dụng
-// //Auth router
-// app.use("/api", router);
-// //User Router
-// app.use("/api", userRouter);
 app.use(routerMiddlewares);
+
+// 🟢 Tạo HTTP server để chia sẻ cho Socket.IO
+const server = http.createServer(app);
+// 🟢 Khởi tạo Socket.IO
+const io = new Server(server, {
+  cors: {
+    origin: process.env.CLIENT_URL_Test || "http://localhost:5173",
+    methods: ["GET", "POST"],
+    credentials: true,
+  },
+});
+
+// 🟢 Truyền io vào file socket chat
+initChatSocket(io);
 
 //Check Database chạy chưa
 db.sequelize.sync().then(() => {
   console.log("✅ Database connected!");
-  app.listen(process.env.PORT || 8080, () => {
+  server.listen(process.env.PORT || 8080, () => {
     console.log(`🚀 Server chạy ở cổng ${process.env.PORT || 8080}`);
   });
 });
-// Khởi động server để lấy link mở server
-// app.listen(port, () => {
-//   console.log(`🚀 Server running at http://localhost:${port}`);
-// });
